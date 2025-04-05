@@ -1,0 +1,10 @@
+{
+  "projects": {
+    "default": "dice-mice-dev",
+    "dev": "dice-mice-dev",
+    "prod": "dice-mice-prod",
+    "test": "dice-mice-test"
+  },
+  "targets": {},
+  "etags": {}
+}
