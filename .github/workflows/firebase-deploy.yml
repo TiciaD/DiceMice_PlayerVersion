@@ -1,0 +1,49 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches:
+      - main
+      - development
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Angular app
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+            npm run build -- --configuration=production
+          elif [[ $GITHUB_REF == 'refs/heads/development' ]]; then
+            npm run build -- --configuration=development
+          elif [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
+            npm run build -- --configuration=test
+          fi
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase
+        env:
+          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+            firebase deploy --only hosting --project=prod --token "$FIREBASE_DEPLOY_TOKEN"
+          elif [[ $GITHUB_REF == 'refs/heads/development' ]]; then
+            firebase deploy --only hosting --project=dev --token "$FIREBASE_DEPLOY_TOKEN"
+          elif [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
+            firebase deploy --only hosting --project=test --token "$FIREBASE_DEPLOY_TOKEN"
+          fi
