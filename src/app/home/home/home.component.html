@@ -1,0 +1,7 @@
+<div>
+  @if (authService.getRole() === 'ADMIN') {
+  <app-admin-home></app-admin-home>
+  } @else {
+  <app-basic-home></app-basic-home>
+  }
+</div>

@@ -1,0 +1,53 @@
+<div class="card">
+  <p-menubar [model]="items">
+    <ng-template #start>
+      <h2 class="font-bold text-xl hidden md:block">Dice Mice</h2>
+    </ng-template>
+    <ng-template #item let-item let-root="root">
+      <a
+        [routerLink]="item.route"
+        class="flex items-center p-menubar-item-link"
+      >
+        <span>{{ item.label }}</span>
+      </a>
+    </ng-template>
+    <ng-template>
+      <h2 class="font-bold text-xl block md:hidden">Dice Mice</h2>
+    </ng-template>
+    <ng-template #end>
+      <div class="flex items-center gap-2">
+        @if (authService.currentUser() != null) {
+        <p-menu #menu [model]="userNavItems" [popup]="true">
+          <ng-template #item let-item>
+            <ng-container>
+              <a [routerLink]="item.route" class="p-menu-item-link">
+                <span class="ml-2">{{ item.label }}</span>
+              </a>
+            </ng-container>
+          </ng-template>
+        </p-menu>
+
+        <p-button [rounded]="true" [text]="true" severity="secondary">
+          <p-avatar
+            [image]="getDiscordAvatarUrl()"
+            size="large"
+            shape="circle"
+            (click)="menu.toggle($event)"
+          />
+        </p-button>
+        } @else {
+        <p-button
+          [rounded]="true"
+          [text]="true"
+          severity="secondary"
+          [link]="true"
+        >
+          <a [href]="getDiscordOAuthUrl()">
+            <p-avatar image="discord-logo.svg" shape="circle" />
+          </a>
+        </p-button>
+        }
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>

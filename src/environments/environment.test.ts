@@ -1,5 +1,8 @@
 export const environment = {
   production: false,
+  apiUrl: 'https://dice-mice-dev-api.vercel.app/',
+  discordClientId: '1305358541510672444',
+  discordRedirectUri: 'http://localhost:4200/callback',
   firebaseConfig: {
     apiKey: 'AIzaSyCLLr-D4Nyk49oL8dNU5v53f58JldLySeY',
     authDomain: 'dice-mice-test.firebaseapp.com',
