@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "./dist/dice-mice",
+    "public": "/dist/dice-mice/browser",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
