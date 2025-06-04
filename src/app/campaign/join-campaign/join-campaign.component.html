@@ -1,0 +1,49 @@
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2
+      class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
+    >
+      Join A Campaign
+    </h2>
+  </div>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <label for="campaign-id">Enter Campaign ID</label>
+    <p-inputgroup>
+      <input
+        id="campaign-id"
+        pInputText
+        placeholder="e.g. abc123"
+        [(ngModel)]="campaignId"
+        (ngModelChange)="onInputChange()"
+      />
+      <p-inputgroup-addon>
+        <p-button
+          icon="pi pi-check"
+          label="Join Campaign"
+          severity="success"
+          [disabled]="!isValid"
+          (click)="joinCampaign()"
+        />
+      </p-inputgroup-addon>
+    </p-inputgroup>
+    <p-divider />
+    <div class="mt-2 flex flex-col gap-3 items-center justify-center">
+      <h3 class="bold">OR</h3>
+      <p-button
+        label="Join Default Campaign"
+        (click)="joinDefaultCampaign()"
+        class="p-button-primary"
+      ></p-button>
+      @if (errorMessage) {
+      <div class="p-error">{{ errorMessage }}</div>
+      } @if (foundCampaign) {
+      <div class="mt-4 flex flex-col items-center gap-3 justify-center">
+        Successfully joined campaign: {{ foundCampaign.name }}!<br />
+        <a routerLink="/create-house" class="p-button font-bold">
+          Go To Region
+        </a>
+      </div>
+      }
+    </div>
+  </div>
+</div>

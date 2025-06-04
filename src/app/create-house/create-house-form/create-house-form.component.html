@@ -1,0 +1,110 @@
+@if (showRegionSelector()) {
+<app-region-selector></app-region-selector>
+} @else {
+<div class="p-3">
+  <nav aria-label="Back To Region Select">
+    <p-button
+      (onClick)="onBackToRegion()"
+      label="Back"
+      variant="text"
+      severity="secondary"
+      icon="pi pi-arrow-left"
+    />
+  </nav>
+  <div class="flex justify-center py-3">
+    <h2
+      class="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
+    >
+      Create House Form
+    </h2>
+  </div>
+  <form [formGroup]="createHouseForm" (ngSubmit)="onFormSubmit()">
+    <div class="space-y-10 max-w-xl mx-auto">
+      <div class="flex flex-col gap-2">
+        <label for="houseOriginCounty"
+          >House Origin County<span class="pl-0.5 text-red-700">*</span></label
+        >
+        <input
+          id="houseOriginCounty"
+          pInputText
+          [disabled]="true"
+          [value]="this.selectedCounty()?.name"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="houseName"
+          >House Name<span class="pl-0.5 text-red-700">*</span></label
+        >
+        <p-inputgroup>
+          <p-inputgroup-addon>House</p-inputgroup-addon>
+          <input
+            pInputText
+            id="houseName"
+            formControlName="houseName"
+            placeholder="e.g. Godfrey"
+          />
+        </p-inputgroup>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="houseMotto"
+          >House Words<span class="pl-0.5 text-red-700">*</span></label
+        >
+        <input
+          pInputText
+          id="houseMotto"
+          formControlName="houseMotto"
+          aria-describedby="houseMottoHelp"
+        />
+        <small id="houseMottoHelp"
+          >This is a brief motto that describes your houses' strongest
+          beliefs.</small
+        >
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="headOfHouseName">Head of House Name</label>
+        <input
+          pInputText
+          id="headOfHouseName"
+          formControlName="headOfHouse"
+          aria-describedby="headOfHouseNameHelp"
+        />
+        <small id="headOfHouseNameHelp"
+          >This is the name of the leader of your house. The leader of your
+          house will not be a playable character.</small
+        >
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="houseBio"
+          >House Bio <span class="text-sms italic">(optional)</span></label
+        >
+        <textarea
+          id="houseBio"
+          rows="5"
+          cols="30"
+          pTextarea
+          formControlName="houseBio"
+          [autoResize]="true"
+          aria-describedby="houseBioHelp"
+        ></textarea>
+        <small id="houseBioHelp"
+          >Enter a brief description of your house. This is an optional field
+          and can be added or expanded upon later.</small
+        >
+      </div>
+
+      @if (createHouseForm.get('houseName')?.invalid &&
+      createHouseForm.get('houseName')?.touched) {
+      <small class="text-red-600"> House name is required. </small>
+      }
+
+      <div class="flex">
+        <p-button type="submit" label="Submit House" />
+      </div>
+    </div>
+  </form>
+</div>
+}

@@ -1,0 +1,63 @@
+<div class="p-3">
+  <div class="min-w-0 flex-1; my-4">
+    <h2
+      class="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
+    >
+      Select A Home Region
+    </h2>
+  </div>
+  <ul role="list" class="space-y-3">
+    @for (county of counties(); track $index) {
+    <li
+      class="cursor-pointer overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm"
+      [ngClass]="{
+        'border-blue-500 ring-2 ring-blue-300': expandedCountyId() === county.id
+      }"
+      (click)="toggleCounty(county.id)"
+    >
+      <div class="sm:flex">
+        <div class="mb-4 shrink-0 sm:mr-4 sm:mb-0">
+          <p-image
+            class="h-32 w-full sm:w-32"
+            [src]="`img/${county.id}.png`"
+            [alt]="county.name"
+            width="250px"
+          />
+        </div>
+        <div>
+          <h4 class="text-xl font-bold">{{ county.name }}</h4>
+          <p class="mt-1">
+            {{ county.description }}
+          </p>
+
+          @if(expandedCountyId() === county.id) {
+          <div class="my-3">
+            <p>
+              Associated Stat:
+              <span class="font-semibold">{{ county.associatedStat }}</span>
+            </p>
+            <p>
+              Associated Skills:
+              <span class="italic">{{
+                county.associatedSkills.join(", ")
+              }}</span>
+            </p>
+          </div>
+          <div class="mt-4">
+            <p class="mb-2 font-medium text-gray-700">
+              Are you sure you want to select this region?
+            </p>
+            <button
+              pButton
+              label="Confirm Selection"
+              class="p-button-sm p-button-outlined p-button-success"
+              (click)="confirmCounty(county.id); $event.stopPropagation()"
+            ></button>
+          </div>
+          }
+        </div>
+      </div>
+    </li>
+    }
+  </ul>
+</div>

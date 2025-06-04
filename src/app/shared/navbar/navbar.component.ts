@@ -38,18 +38,6 @@ export class NavbarComponent {
       icon: 'pi pi-list',
       route: '/rules',
     },
-    {
-      label: 'Compendium',
-      route: '/compendium',
-    },
-    {
-      label: 'Community',
-      route: '/community',
-    },
-    {
-      label: 'FAQs',
-      route: '/faqs',
-    },
   ];
 
   adminNavItems = [
@@ -66,13 +54,17 @@ export class NavbarComponent {
       route: '/house',
     },
     {
+      label: 'My Campaigns',
+      route: '/campaigns',
+    },
+    {
       label: 'My Characters',
       route: '/characters',
     },
-    {
-      label: 'Preferences',
-      route: '/preferences',
-    },
+    // {
+    //   label: 'Preferences',
+    //   route: '/preferences',
+    // },
     {
       label: 'Logout',
       route: '/logout',

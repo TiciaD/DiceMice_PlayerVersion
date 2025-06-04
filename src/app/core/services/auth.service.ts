@@ -6,10 +6,11 @@ import {
   signal,
 } from '@angular/core';
 import { doc, getDoc } from '@angular/fire/firestore';
-import { onAuthStateChanged, signInWithCustomToken } from 'firebase/auth';
+import { onAuthStateChanged, signInWithCustomToken, User } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { environment } from '../../../environments/environment';
+import { GlobalVarsService } from './global-vars.service';
 
 export type AuthUser = {
   id: string;
@@ -17,6 +18,7 @@ export type AuthUser = {
   avatar: string;
   email?: string;
   role: 'ADMIN' | 'BASIC';
+  lastCampaignId?: string;
 };
 
 @Injectable({
@@ -33,7 +35,14 @@ export class AuthService {
     return this._loading;
   }
 
-  constructor(private injector: Injector) {
+  get authUser() {
+    return this.auth.currentUser;
+  }
+
+  constructor(
+    private injector: Injector,
+    private globalVarsService: GlobalVarsService
+  ) {
     this.restoreFromStorage();
     onAuthStateChanged(this.auth, (firebaseUser) => {
       console.log('auth state changed!', firebaseUser);
@@ -65,8 +74,12 @@ export class AuthService {
     const userDoc = await getDoc(doc(this.firestore, 'players', uid));
     if (userDoc.exists()) {
       const userData = userDoc.data() as AuthUser;
+      this.globalVarsService.selectedCampaignId.set(
+        userData.lastCampaignId ?? null
+      );
       this.currentUser.set(userData);
       localStorage.setItem('authUser', JSON.stringify(userData));
+      this.globalVarsService.loadBaseData();
     } else {
       this.clearUser();
     }

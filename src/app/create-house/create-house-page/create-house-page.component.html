@@ -1,0 +1,49 @@
+<div class="w-full h-full">
+  @if (isLoading()) {
+  <div class="flex items-center justify-center w-full h-full">
+    <p-progress-spinner ariaLabel="loading" />
+  </div>
+  } @else { @if (existingHouse()) {
+  <div class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
+    <div class="text-center">
+      <h2
+        class="mt-4 text-2xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl"
+      >
+        House has been created.
+      </h2>
+      <p
+        class="mt-6 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8"
+      >
+        Would you like to create mice for your House?
+      </p>
+      <div class="mt-10 flex items-center justify-center gap-x-6">
+        <a
+          routerLink="/"
+          label="Go back home"
+          variant="text"
+          class="p-button text-sm font-semibold text-gray-900"
+          >Go back home</a
+        >
+        <a routerLink="/" class="p-button font-bold">Create Mice</a>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div>
+    @if (showRegionSelector()) {
+    <app-region-selector
+      [showRegionSelector]="showRegionSelector"
+      [selectedCounty]="selectedCounty"
+    ></app-region-selector>
+    } @else {
+    <app-create-house-form
+      [isLoading]="isLoading"
+      [showRegionSelector]="showRegionSelector"
+      [selectedCounty]="selectedCounty"
+      [selectedCampaignId]="selectedCampaignId"
+      [onSubmit]="onSubmit"
+    ></app-create-house-form>
+    }
+  </div>
+  } }
+</div>

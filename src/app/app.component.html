@@ -1,4 +1,12 @@
 <app-navbar></app-navbar>
-<main class="size-full overflow-y-auto">
+@if (this.authService.loading()) {
+<main style="height: calc(100vh - 75px)" class="size-full overflow-y-auto">
+  <div class="justify-items-center items-center">
+    <p-progress-spinner ariaLabel="loading" />
+  </div>
+</main>
+} @else {
+<main style="height: calc(100vh - 75px)" class="size-full overflow-y-auto">
   <router-outlet />
 </main>
+}
